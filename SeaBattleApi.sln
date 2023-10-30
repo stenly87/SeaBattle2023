@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34024.191
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeaBattleApi", "SeaBattleApi\SeaBattleApi.csproj", "{A7D55CAC-11ED-4A00-841E-43333EDF5F83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeaBattleDB", "SeaBattleDB\SeaBattleDB.csproj", "{EBC9C601-957F-4DFC-94E9-6CA0C331DCA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeaBattleRepository", "SeaBattleRepository\SeaBattleRepository.csproj", "{2E8751A9-4899-4146-9A13-C6DC2E9C8A81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeaBattleLogic", "SeaBattleLogic\SeaBattleLogic.csproj", "{868FEFD5-2396-449D-8794-5A87CE857F24}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A7D55CAC-11ED-4A00-841E-43333EDF5F83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7D55CAC-11ED-4A00-841E-43333EDF5F83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7D55CAC-11ED-4A00-841E-43333EDF5F83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7D55CAC-11ED-4A00-841E-43333EDF5F83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBC9C601-957F-4DFC-94E9-6CA0C331DCA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBC9C601-957F-4DFC-94E9-6CA0C331DCA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBC9C601-957F-4DFC-94E9-6CA0C331DCA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBC9C601-957F-4DFC-94E9-6CA0C331DCA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E8751A9-4899-4146-9A13-C6DC2E9C8A81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E8751A9-4899-4146-9A13-C6DC2E9C8A81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E8751A9-4899-4146-9A13-C6DC2E9C8A81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E8751A9-4899-4146-9A13-C6DC2E9C8A81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{868FEFD5-2396-449D-8794-5A87CE857F24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{868FEFD5-2396-449D-8794-5A87CE857F24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{868FEFD5-2396-449D-8794-5A87CE857F24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{868FEFD5-2396-449D-8794-5A87CE857F24}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6E791694-5A7F-48AF-8249-BB4C22907AFF}
+	EndGlobalSection
+EndGlobal
