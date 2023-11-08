@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SeaBattleDB.DB;
 using SeaBattleRepository.Interfaces;
+using System.Linq.Expressions;
 
 namespace SeaBattleRepository.Implement
 {
@@ -44,6 +45,13 @@ namespace SeaBattleRepository.Implement
         public async Task SaveAsync()
         { 
             await context.SaveChangesAsync();
+        }
+
+        public async Task<T> SearchEntryByConditionAsync(Expression<Func<T, bool>> condition)
+        {
+            var entry = await context.Set<T>().AsNoTracking()
+                 .FirstOrDefaultAsync(condition);
+            return entry;
         }
     }
 }
