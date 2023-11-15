@@ -22,12 +22,12 @@ namespace SeaBattleApi.Controllers
         [HttpPost("GetToken")]
         public async Task<ActionResult<string>> Login(string login, string password)
         {
-            var user = await repositoryUser.SearchEntryByConditionAsync(s=>s.Login == login
+            var user = await repositoryUser.SearchEntryByConditionAsync(s => s.Login == login
                 && s.Password == password);
             if (user.Id == 0)
                 return NotFound();
 
-            var claimAuth = new List<Claim> { 
+            var claimAuth = new List<Claim> {
                 new Claim(ClaimTypes.Name, login),
                 new Claim("ID", user.Id.ToString(), ClaimValueTypes.Integer32)
             };
@@ -43,5 +43,27 @@ namespace SeaBattleApi.Controllers
             var result = new JwtSecurityTokenHandler().WriteToken(jwt);
             return result;
         }
+
+        [HttpPost("Registration")]
+        public async Task<ActionResult> Registration(AuthData data)
+        {
+            var user = await repositoryUser.
+                SearchEntryByConditionAsync(s => s.Login == data.Login);
+            if (user.Id != 0)
+                return BadRequest("Пользователь с таким логином уже существует");
+
+            //Console.WriteLine(HttpContext.Request.Headers["Authorization"]);
+            Console.WriteLine(HttpContext.User.Claims);
+            await repositoryUser.CreateAsync(new SeaBattleRepository.DTO.UserDTO
+            {
+                Login = data.Login,
+                Password = data.Password,
+            });
+
+            await repositoryUser.SaveAsync();
+
+            return Ok();
+        }
+
     }
 }
