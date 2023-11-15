@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using SeaBattleApi.Auth;
@@ -31,18 +32,26 @@ namespace SeaBattleApi.Controllers
                 new Claim(ClaimTypes.Name, login),
                 new Claim("ID", user.Id.ToString(), ClaimValueTypes.Integer32)
             };
-
             var jwt = new JwtSecurityToken(
             issuer: AuthOptions.ISSUER,
             audience: AuthOptions.AUDIENCE,
             claims: claimAuth,
-            expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(60)),
+            expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(120)),
             signingCredentials: new SigningCredentials(
                 AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
 
             var result = new JwtSecurityTokenHandler().WriteToken(jwt);
             return result;
         }
+
+        //[Authorize]
+        //[HttpPost("test")]
+        //public ActionResult Test()
+        //{
+        //    Console.WriteLine(HttpContext.User.Claims.
+        //        FirstOrDefault(s=>s.Type == "ID").Value);
+        //    return Ok();
+        //}
 
         [HttpPost("Registration")]
         public async Task<ActionResult> Registration(AuthData data)
@@ -52,8 +61,6 @@ namespace SeaBattleApi.Controllers
             if (user.Id != 0)
                 return BadRequest("Пользователь с таким логином уже существует");
 
-            //Console.WriteLine(HttpContext.Request.Headers["Authorization"]);
-            Console.WriteLine(HttpContext.User.Claims);
             await repositoryUser.CreateAsync(new SeaBattleRepository.DTO.UserDTO
             {
                 Login = data.Login,

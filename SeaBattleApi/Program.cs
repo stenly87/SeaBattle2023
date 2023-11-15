@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using SeaBattleApi.Auth;
+using SeaBattleApi.Middleware;
 using SeaBattleDB.DB;
+using SeaBattleLogic;
 using SeaBattleRepository.Implement;
 
 namespace SeaBattleApi
@@ -37,15 +39,18 @@ namespace SeaBattleApi
             builder.Services.AddDbContext<User29Context>();
             builder.Services.AddScoped<RepositoryGame>();
             builder.Services.AddScoped<RepositoryUser>();
+            builder.Services.AddScoped<GameLogic>();
 
             var app = builder.Build();
-
+            
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseHttpsRedirection();
 

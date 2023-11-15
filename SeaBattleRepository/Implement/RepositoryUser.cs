@@ -15,10 +15,12 @@ namespace SeaBattleRepository.Implement
         // переопределить методы из RepositoryBase
         // надо добавить конвертирование данных из модели в дто
 
-        public override async Task CreateAsync(UserDTO entity)
+        public override async Task<int> CreateAsync(UserDTO entity)
         {
             var model = entity.ToModel();
             await context.Users.AddAsync(model);
+            await SaveAsync();
+            return model.Id;
         }
 
         public override async Task UpdateAsync(UserDTO entity)

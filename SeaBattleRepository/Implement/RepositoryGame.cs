@@ -16,7 +16,7 @@ namespace SeaBattleRepository.Implement
         {
         }
 
-        public override async Task CreateAsync(GameDTO entity)
+        public override async Task<int> CreateAsync(GameDTO entity)
         {
             // если мы будем сохранять объект таким образом
             // то мы получим ошибку
@@ -31,7 +31,8 @@ namespace SeaBattleRepository.Implement
             context.Games.Attach(model);
             context.Games.Entry(model).State = 
                 Microsoft.EntityFrameworkCore.EntityState.Added;
-            await Task.CompletedTask;
+            await SaveAsync();
+            return model.Id;
         }
 
         public override async Task UpdateAsync(GameDTO entity)

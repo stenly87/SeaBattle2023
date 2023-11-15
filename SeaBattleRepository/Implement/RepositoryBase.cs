@@ -18,7 +18,7 @@ namespace SeaBattleRepository.Implement
 
         }
         
-        public abstract Task CreateAsync(V entity);
+        public abstract Task<int> CreateAsync(V entity);
         public abstract Task UpdateAsync(V entity);
 
         public async Task DeleteAsync(int id)

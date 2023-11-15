@@ -24,7 +24,7 @@ public partial class User29Context : DbContext
         => optionsBuilder.UseSqlServer("server=192.168.200.35;user=user29;database=user29;password=94426;TrustServerCertificate=true");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {        
+    {
         modelBuilder.Entity<Game>(entity =>
         {
             entity.Property(e => e.Id).HasColumnName("id");
@@ -65,9 +65,7 @@ public partial class User29Context : DbContext
                     {
                         j.HasKey("IdGame", "IdUser");
                         j.ToTable("CrossGameUsers");
-                        j.IndexerProperty<int>("IdGame")
-                            .ValueGeneratedOnAdd()
-                            .HasColumnName("id_game");
+                        j.IndexerProperty<int>("IdGame").HasColumnName("id_game");
                         j.IndexerProperty<int>("IdUser").HasColumnName("id_user");
                     });
         });
@@ -83,9 +81,6 @@ public partial class User29Context : DbContext
                 .HasColumnName("password");
             entity.Property(e => e.Rating).HasColumnName("rating");
         });
-
-        modelBuilder.Entity<Game>(entity =>
-            entity.Navigation(s => s.IdUsers).AutoInclude());
 
         OnModelCreatingPartial(modelBuilder);
     }
