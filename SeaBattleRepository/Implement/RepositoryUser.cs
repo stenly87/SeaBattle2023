@@ -4,11 +4,12 @@ using SeaBattleRepository.MapperHelper;
 
 namespace SeaBattleRepository.Implement
 {
-    public class RepositoryUser : RepositoryBase<UserDTO>
+    public class RepositoryUser : RepositoryBase<User, UserDTO>
     {
         public RepositoryUser(User29Context context) :
-            base(context)
+            base(context, DTOHelper.ToDTO)
         {
+
         }
 
         // переопределить методы из RepositoryBase

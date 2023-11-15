@@ -12,6 +12,8 @@ namespace SeaBattleRepository.MapperHelper
     {
         public static GameDTO ToDTO(this Game game)
         {
+            if (game == null)
+                return new GameDTO();
             var creator = game.IdUsers.
                 FirstOrDefault(s => s.Id == game.CreatorUserId);
             var opponent = game.IdUsers.
@@ -33,6 +35,8 @@ namespace SeaBattleRepository.MapperHelper
 
         public static UserDTO ToDTO(this User user)
         {
+            if (user == null)
+                return new UserDTO();
             return new UserDTO
             {
                 Id = user.Id,

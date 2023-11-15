@@ -9,9 +9,10 @@ using System.Threading.Tasks;
 
 namespace SeaBattleRepository.Implement
 {
-    public class RepositoryGame : RepositoryBase<GameDTO>
+    public class RepositoryGame : RepositoryBase<Game, GameDTO>
     {
-        public RepositoryGame(User29Context context) : base(context)
+        public RepositoryGame(User29Context context) :
+            base(context, DTOHelper.ToDTO)
         {
         }
 

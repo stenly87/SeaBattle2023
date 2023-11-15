@@ -24,7 +24,7 @@ namespace SeaBattleApi.Controllers
         {
             var user = await repositoryUser.SearchEntryByConditionAsync(s=>s.Login == login
                 && s.Password == password);
-            if (user == null)
+            if (user.Id == 0)
                 return NotFound();
 
             var claimAuth = new List<Claim> { 

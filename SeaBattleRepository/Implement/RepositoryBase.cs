@@ -5,18 +5,21 @@ using System.Linq.Expressions;
 
 namespace SeaBattleRepository.Implement
 {
-    public abstract class RepositoryBase<T> :
-        IRepository<T> where T : class
+    public abstract class RepositoryBase<T,V> :
+        IRepository<T,V> where T : class where V : class
     {
         protected readonly User29Context context;
+        protected Func<T, V> toDTO;
 
-        public RepositoryBase(User29Context context)
+        public RepositoryBase(User29Context context, Func<T, V> toDTO)
         {
             this.context = context;
-        }
+            this.toDTO = toDTO;
 
-        public abstract Task CreateAsync(T entity);
-        public abstract Task UpdateAsync(T entity);
+        }
+        
+        public abstract Task CreateAsync(V entity);
+        public abstract Task UpdateAsync(V entity);
 
         public async Task DeleteAsync(int id)
         {
@@ -29,17 +32,17 @@ namespace SeaBattleRepository.Implement
             context.Set<T>().Remove(delete);
         }
 
-        public IEnumerable<T> GetByCondition(Func<T, bool> condition)
+        public IEnumerable<V> GetByCondition(Func<T, bool> condition)
         {
             var array = context.Set<T>().AsNoTracking()
                 .Where(condition).ToList();
-            return array;
+            return array.Select(s => toDTO(s));
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public async Task<V> GetByIdAsync(int id)
         {
             var entity = await context.Set<T>().FindAsync(id);
-            return entity;
+            return toDTO(entity);
         }
 
         public async Task SaveAsync()
@@ -47,11 +50,11 @@ namespace SeaBattleRepository.Implement
             await context.SaveChangesAsync();
         }
 
-        public async Task<T> SearchEntryByConditionAsync(Expression<Func<T, bool>> condition)
+        public async Task<V> SearchEntryByConditionAsync(Expression<Func<T, bool>> condition)
         {
             var entry = await context.Set<T>().AsNoTracking()
                  .FirstOrDefaultAsync(condition);
-            return entry;
+            return toDTO(entry);
         }
     }
 }

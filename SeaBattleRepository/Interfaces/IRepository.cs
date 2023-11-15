@@ -3,14 +3,14 @@ using System.Threading.Tasks;
 
 namespace SeaBattleRepository.Interfaces
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<T, V> where T : class where V : class
     {
-        Task<T> GetByIdAsync(int id);
-        Task CreateAsync(T entity);
-        Task UpdateAsync(T entity);
+        Task<V> GetByIdAsync(int id);
+        Task CreateAsync(V entity);
+        Task UpdateAsync(V entity);
         Task DeleteAsync(int id);
-        Task<T> SearchEntryByConditionAsync(Expression<Func<T, bool>> condition);
-        IEnumerable<T> GetByCondition(Func<T, bool> condition);
+        Task<V> SearchEntryByConditionAsync(Expression<Func<T, bool>> condition);
+        IEnumerable<V> GetByCondition(Func<T, bool> condition);
         Task SaveAsync();
     }
 }
