@@ -28,6 +28,15 @@ namespace SeaBattleApi.Controllers
             return game;
         }
 
+        [Authorize]
+        [HttpPost("ListGame")]
+        public async Task<ActionResult<List<GameDTO>>> ListGame()
+        {
+            List<GameDTO> games = gameLogic.ListFreeGame();
+            return games;
+        }
+
+
         private int GetUserID()
         {
             var claim = HttpContext.User.Claims
