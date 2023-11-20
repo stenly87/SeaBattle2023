@@ -68,6 +68,7 @@ public partial class User29Context : DbContext
                         j.IndexerProperty<int>("IdGame").HasColumnName("id_game");
                         j.IndexerProperty<int>("IdUser").HasColumnName("id_user");
                     });
+            entity.Navigation("IdUsers").AutoInclude();
         });
 
         modelBuilder.Entity<User>(entity =>

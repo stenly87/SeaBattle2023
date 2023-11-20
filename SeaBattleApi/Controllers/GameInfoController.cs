@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SeaBattleApi.Auth;
 using SeaBattleLogic;
 using SeaBattleRepository.DTO;
 using SeaBattleRepository.Implement;
@@ -23,7 +24,7 @@ namespace SeaBattleApi.Controllers
         [HttpPost("CreateGame")]
         public async Task<ActionResult<GameDTO>> CreateGame()
         {
-            int idUser = GetUserID();
+            int idUser = HttpContextInfo.GetUserID(this.HttpContext);
             GameDTO game = await gameLogic.CreateGameAsync(idUser);
             return game;
         }
@@ -32,19 +33,17 @@ namespace SeaBattleApi.Controllers
         [HttpPost("ListGame")]
         public async Task<ActionResult<List<GameDTO>>> ListGame()
         {
-            List<GameDTO> games = gameLogic.ListFreeGame();
+            int opponentId = HttpContextInfo.GetUserID(this.HttpContext);
+            List<GameDTO> games = gameLogic.ListFreeGame(opponentId);
             return games;
         }
 
-
-        private int GetUserID()
+        [Authorize]
+        [HttpPost("JoinGame")]
+        public async Task<ActionResult<bool>> JoinGame(int idGame)
         {
-            var claim = HttpContext.User.Claims
-                            .FirstOrDefault(s => s.Type == "ID");
-            if (claim == null)
-                throw new Exception("Требуется авторизация");
-            int idUser = int.Parse(claim.Value);
-            return idUser;
+            int opponentId = HttpContextInfo.GetUserID(this.HttpContext);
+            return await gameLogic.JoinGameAsync(opponentId, idGame);
         }
     }
 }

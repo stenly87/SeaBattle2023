@@ -44,8 +44,9 @@ namespace SeaBattleRepository.Implement
             var model = entity.ToModel();
             context.Games.Entry(find).CurrentValues.SetValues(model);
             foreach (var user in model.IdUsers)
-                if (!find.IdUsers.Contains(user))
-                    find.IdUsers.Add(user);
+                if (find.IdUsers.FirstOrDefault(s => s.Id == user.Id) == null)
+                    find.IdUsers.Add(await context.Users.FindAsync(user.Id));
+               
             await Task.CompletedTask;
         }
     }
