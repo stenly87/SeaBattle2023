@@ -65,10 +65,58 @@ namespace SeaBattleLogic
             {
                 return new GameTurn
                 {
-                    FieldUser = game.Creator.Id == userId ? game.FieldUser1 : game.FieldUser2,
+                    FieldUser = game.Creator.Id == userId
+                        ? game.FieldUser1 : game.FieldUser2,
                     IdUserNextTurn = userId
                 };
             }
+            else
+            {
+                return new GameTurn
+                {
+                    IdUserNextTurn = game.IdUserNextTurn,
+                    IdWinner = game.IdUserWinner ?? 0
+                };
+            }
+        }
+
+        public async Task<TurnResult> MakeTurnAsync(int userId, int idGame, int x, int y)
+        {
+            TurnResult turnResult = TurnResult.Lose;
+            var game = await repositoryGame.SearchEntryByConditionAsync(s => s.Id == idGame);
+            if (game.Id == 0)
+                throw new Exception($"not found game by id {idGame}");
+            var user = await repositoryUser.SearchEntryByConditionAsync(s => s.Id == userId);
+            if (user.Id == 0)
+                throw new Exception($"not found user by id {userId}");
+
+            if (game.IdUserNextTurn != userId)
+                throw new Exception($"next turn is not for user id {userId}");
+
+            var fieldTarget = game.Creator.Id == userId ? game.FieldUser2 : game.FieldUser1;
+            var targetCell = x + 10 * y;
+            if (fieldTarget[targetCell] == 1)
+            {
+                turnResult = TurnResult.Hit;
+                fieldTarget[targetCell] = 2;
+                if (fieldTarget.FirstOrDefault(s => s == 1) == null)
+                {
+                    turnResult = TurnResult.Winner;
+                    game.IdUserWinner = userId;
+                    game.Status = 2;
+                }
+                game.IdUserNextTurn = userId;
+            }
+            else
+            {
+                fieldTarget[targetCell] = 3;
+                game.IdUserNextTurn = game.Creator.Id == userId ? game.Opponent.Id : game.Creator.Id;
+            }
+            game.DatetimeLastTurn = DateTime.Now;
+            await repositoryGame.UpdateAsync(game);
+            await repositoryGame.SaveAsync();
+
+            return turnResult;
         }
     }
 }

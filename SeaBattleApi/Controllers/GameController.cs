@@ -24,5 +24,13 @@ namespace SeaBattleApi.Controllers
             int userId = HttpContextInfo.GetUserID(this.HttpContext);
             return await gameLogic.CheckTurnAsync(userId, idGame);
         }
+
+        [Authorize]
+        [HttpPost("MakeTurn")]
+        public async Task<ActionResult<TurnResult>> MakeTurn(int idGame, int x, int y)
+        {
+            int userId = HttpContextInfo.GetUserID(this.HttpContext);
+            return await gameLogic.MakeTurnAsync(userId, idGame, x, y);
+        }
     }
 }
