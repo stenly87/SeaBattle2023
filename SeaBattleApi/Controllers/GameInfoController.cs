@@ -44,6 +44,6 @@ namespace SeaBattleApi.Controllers
         {
             int opponentId = HttpContextInfo.GetUserID(this.HttpContext);
             return await gameLogic.JoinGameAsync(opponentId, idGame);
-        }
+        }        
     }
 }
