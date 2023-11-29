@@ -17,7 +17,10 @@ namespace SeaBattleApi
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddJsonOptions(s =>
+            {
+                s.JsonSerializerOptions.PropertyNamingPolicy = null;
+            });
             builder.Services.AddAuthorization();
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -42,7 +45,7 @@ namespace SeaBattleApi
             builder.Services.AddScoped<GameLogic>();
 
             var app = builder.Build();
-            
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {

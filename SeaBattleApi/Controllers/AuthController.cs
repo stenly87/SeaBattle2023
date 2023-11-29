@@ -44,15 +44,6 @@ namespace SeaBattleApi.Controllers
             return result;
         }
 
-        //[Authorize]
-        //[HttpPost("test")]
-        //public ActionResult Test()
-        //{
-        //    Console.WriteLine(HttpContext.User.Claims.
-        //        FirstOrDefault(s=>s.Type == "ID").Value);
-        //    return Ok();
-        //}
-
         [HttpPost("Registration")]
         public async Task<ActionResult> Registration(AuthData data)
         {
