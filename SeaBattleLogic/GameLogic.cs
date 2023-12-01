@@ -99,7 +99,7 @@ namespace SeaBattleLogic
             {
                 turnResult = TurnResult.Hit;
                 fieldTarget[targetCell] = 2;
-                if (fieldTarget.FirstOrDefault(s => s == 1) == null)
+                if (fieldTarget.Count(s => s == 1) == 0)
                 {
                     turnResult = TurnResult.Winner;
                     game.IdUserWinner = userId;
